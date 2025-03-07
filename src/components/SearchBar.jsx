@@ -1,10 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import useDataStore from '../store/useDataStore';
+import { useState } from 'react';
 
 const SearchBar = ({ placeholder }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { getData } = useDataStore();
+  const [searchQuery, setSearchQuery] = useState(location.state?.query || '');
 
   const handleSearch = () => {
-    navigate('/search');
+    getData(searchQuery);
+    navigate('/search', { state: { query: searchQuery } });
   };
 
   return (
@@ -12,6 +18,8 @@ const SearchBar = ({ placeholder }) => {
       <div className='flex'>
         <input
           type='text'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={placeholder}
           className='flex-1 p-4 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-600'
         />

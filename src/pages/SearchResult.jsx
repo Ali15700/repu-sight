@@ -1,7 +1,11 @@
 import { HiOutlineArrowRight } from 'react-icons/hi';
+import { useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
+import useDataStore from '../store/useDataStore';
 
 function SearchResult() {
+  const { data, loading, error } = useDataStore();
+
   return (
     <div className='min-h-screen bg-white'>
       {/* Header */}
@@ -25,12 +29,12 @@ function SearchResult() {
       <nav className='border-b'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-center space-x-8'>
-            {['LinkedIn', 'Facebook', 'Instagram', 'Twitter', 'TikTok'].map(
+            {['Twitter', 'Facebook', 'Instagram', 'LinkedIn', 'TikTok'].map(
               (filter) => (
                 <button
                   key={filter}
                   className={`py-4 px-1 border-b-2 font-medium ${
-                    filter === 'LinkedIn'
+                    filter === 'Twitter'
                       ? 'border-blue-500 text-blue-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
@@ -46,58 +50,56 @@ function SearchResult() {
       {/* Results */}
       <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
         <div className='flex justify-between items-center mb-6'>
-          <div className='text-gray-700'>27 people found</div>
+          <div className='text-gray-700'>
+            {loading
+              ? '...'
+              : `${data?.twitterUsers?.timeline?.length || 0} accounts found`}
+          </div>
           <button className='text-gray-600 hover:text-gray-900'>
             About these results
           </button>
         </div>
 
-        <div className='space-y-4'>
-          {[
-            {
-              id: 1,
-              name: 'Cristiano Ronaldo',
-              university: 'Northeastern University',
-              city: 'Boston, MA',
-            },
-            {
-              id: 2,
-              name: 'Cristiano Ronaldo',
-              university: 'Harvard University',
-              city: 'Cambridge, MA',
-            },
-            {
-              id: 3,
-              name: 'Cristiano Ronaldo',
-              university: 'MIT',
-              city: 'Cambridge, MA',
-            },
-            {
-              id: 4,
-              name: 'Cristiano Ronaldo',
-              university: 'Boston University',
-              city: 'Boston, MA',
-            },
-          ].map((person) => (
-            <div
-              key={person.id}
-              className='bg-white p-6 rounded-lg border hover:shadow-md transition-shadow cursor-pointer flex items-center justify-between'
-            >
-              <div className='flex items-center space-x-4'>
-                <div className='w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-xl'>
-                  {person.name.charAt(0)}
-                </div>
-                <div>
-                  <h3 className='font-medium text-base'>{person.name}</h3>
-                  <p className='text-gray-500'>
-                    Student at {person.university} · {person.city}
-                  </p>
-                </div>
-              </div>
-              <HiOutlineArrowRight className='text-gray-400 w-5 h-5' />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <div className='flex justify-center items-center py-12'>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500'></div>
+          </div>
+        ) : data?.twitterUsers?.timeline?.length ? (
+          <div className='space-y-4'>
+            {data.twitterUsers.timeline.map((user) =>
+              user.name && user.screen_name ? (
+                <a
+                  href={`https://x.com/${user.screen_name}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  key={user.user_id}
+                  className='bg-white p-6 rounded-lg border hover:shadow-md transition-shadow cursor-pointer flex items-center justify-between'
+                >
+                  <div className='flex items-center space-x-4'>
+                    <div className='w-12 h-12 rounded-full overflow-hidden'>
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className='w-full h-full object-cover'
+                      />
+                    </div>
+                    <div>
+                      <h3 className='font-medium text-base'>{user.name}</h3>
+                      <p className='text-gray-500'>@{user.screen_name}</p>
+                    </div>
+                  </div>
+                  <HiOutlineArrowRight className='text-gray-400 w-5 h-5' />
+                </a>
+              ) : null
+            )}
+          </div>
+        ) : (
+          <div className='text-center py-12'>
+            <p className='text-gray-500 text-lg'>
+              No people or businesses found with this search.
+            </p>
+          </div>
+        )}
       </main>
     </div>
   );
