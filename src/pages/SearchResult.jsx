@@ -1,4 +1,4 @@
-import { HiOutlineArrowRight } from 'react-icons/hi';
+import { HiOutlineArrowRight, HiOutlineUsers } from 'react-icons/hi';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
@@ -53,10 +53,13 @@ function SearchResult() {
       {/* Results */}
       <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
         <div className='flex justify-between items-center mb-6'>
-          <div className='text-gray-700'>
-            {loading
-              ? '...'
-              : `${data?.twitterUsers?.timeline?.length || 0} accounts found`}
+          <div className='text-gray-700 flex items-center gap-2'>
+            <HiOutlineUsers className='w-5 h-5' />
+            <span className='font-bold'>
+              {loading
+                ? '...'
+                : `${data?.twitterUsers?.timeline?.length || 0} accounts found`}
+            </span>
           </div>
           <button className='text-gray-600 hover:text-gray-900'>
             About these results
