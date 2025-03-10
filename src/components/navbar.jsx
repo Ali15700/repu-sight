@@ -3,7 +3,8 @@ const Navbar = () => {
       <header className='container mx-auto px-4 py-4 flex items-center justify-between'>
         <div className='flex items-center'>
           {/* <img src='/logo.svg' alt='Logo' className='h-8' /> */}
-          <span className='ml-2 text-xl font-bold'>RepuSight.ai</span>
+          {/* <span className='ml-2 text-xl font-bold'>RepuSight.ai</span> */}
+          <span className='ml-2 text-xl font-bold'>Reputation Return</span>
         </div>
   
         <nav className='hidden md:flex items-center space-x-6'>
