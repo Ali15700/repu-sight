@@ -1,13 +1,10 @@
 import { HiOutlineArrowRight, HiOutlineUsers } from 'react-icons/hi';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import useDataStore from '../store/useDataStore';
 import Logo from '../components/common/Logo';
 
 function SearchResult() {
   const { data, loading, error } = useDataStore();
-  const navigate = useNavigate();
 
   return (
     <div className='min-h-screen bg-white'>
