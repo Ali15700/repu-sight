@@ -1,10 +1,16 @@
 import { HiOutlineArrowRight, HiOutlineUsers } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import useDataStore from '../store/useDataStore';
 import Logo from '../components/common/Logo';
 
 function SearchResult() {
   const { data, loading, error } = useDataStore();
+  const navigate = useNavigate();
+
+  const handleUserClick = (user) => {
+    navigate('/profile', { state: { user } });
+  };
 
   return (
     <div className='min-h-screen bg-white'>
@@ -71,11 +77,9 @@ function SearchResult() {
           <div className='space-y-4'>
             {data.twitterUsers.timeline.map((user) =>
               user.name && user.screen_name ? (
-                <a
-                  href={`https://x.com/${user.screen_name}`}
-                  target='_blank'
-                  rel='noopener noreferrer'
+                <div
                   key={user.user_id}
+                  onClick={() => handleUserClick(user)}
                   className='bg-white p-6 rounded-lg border hover:shadow-md transition-shadow cursor-pointer flex items-center justify-between'
                 >
                   <div className='flex items-center space-x-4'>
@@ -92,7 +96,7 @@ function SearchResult() {
                     </div>
                   </div>
                   <HiOutlineArrowRight className='text-gray-400 w-5 h-5' />
-                </a>
+                </div>
               ) : null
             )}
           </div>
