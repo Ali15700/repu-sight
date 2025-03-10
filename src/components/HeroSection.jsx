@@ -7,11 +7,7 @@ const Hero = () => {
       <div className='flex flex-col md:flex-row items-center'>
         <div className='md:w-1/2'>
           <h2 className='text-4xl md:text-6xl font-bold mb-6'>
-            {/* Track Businesses & People{' '}
-            <span className='bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent'>
-              Worldwide
-            </span>{' '}
-            in Real-Time */}
+           
              Restore Your {' '}
             <span className='bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent'>
             Online Reputation

@@ -1,10 +1,13 @@
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import useDataStore from '../store/useDataStore';
+import Logo from '../components/common/Logo';
 
 function SearchResult() {
   const { data, loading, error } = useDataStore();
+  const navigate = useNavigate();
 
   return (
     <div className='min-h-screen bg-white'>
@@ -13,7 +16,7 @@ function SearchResult() {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
           {/* Top section with logo and login */}
           <div className='flex justify-between items-center mb-4'>
-            <div className='font-bold text-xl'>RepuSight.ai</div>
+            <Logo />
             <button className='text-gray-700 hover:text-gray-900'>
               Log In
             </button>
